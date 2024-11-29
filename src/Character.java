@@ -11,6 +11,7 @@ public class Character {
     int xDirection; // 1 moving right, -1 moving left
     int yDirection; // 1 moving down, -1 moving up
 
+    final int pxLook = 60;
     /*
     0=wario
     1=yoshi
@@ -26,30 +27,43 @@ public class Character {
 
         checkCollision(level);
     }
-
     private void checkCollision(Level level) {
         boolean collision = false;
+        Random random = new Random();
+        boolean collisionChange = random.nextBoolean();
 
         if (xPosition <= level.getX1Corner()) {
-            xPosition = level.getX1Corner(); 
+            xPosition = level.getX1Corner(); // stops clipping
             xDirection *= -1;
             collision = true;
-        } else if (xPosition >= level.getX2Corner() - 50) { 
-            xPosition = level.getX2Corner() - 50; 
+            if (collisionChange) {
+                yDirection = random.nextInt(3) - 1;
+            }
+        } else if (xPosition >= level.getX2Corner() - pxLook) {
+            xPosition = level.getX2Corner() - pxLook; // stops clipping
             xDirection *= -1;
             collision = true;
+            if (collisionChange) {
+                yDirection = random.nextInt(3) - 1;
+            }
         }
+
 
         if (yPosition <= level.getY1Corner()) {
-            yPosition = level.getY1Corner(); 
+            yPosition = level.getY1Corner(); // stops clipping
             yDirection *= -1;
             collision = true;
-        } else if (yPosition >= level.getY2Corner() - 50) { 
-            yPosition = level.getY2Corner() - 50;
+            if (collisionChange) {
+                xDirection = random.nextInt(3) - 1;
+            }
+        } else if (yPosition >= level.getY2Corner() - pxLook) {
+            yPosition = level.getY2Corner() - pxLook;  // stops clipping
             yDirection *= -1;
             collision = true;
+            if (collisionChange) {
+                xDirection = random.nextInt(3) - 1;
+            }
         }
-
         if (collision) {
             adjustDirection();
         }
@@ -59,11 +73,22 @@ public class Character {
         Random random = new Random();
         boolean diagonal = random.nextBoolean();
 
-        if (diagonal){
-            xDirection *= -1;
-            yDirection *= -1;
+        if (diagonal) {
+            // diagonal
+            if (xDirection == 0) {
+                xDirection = random.nextBoolean() ? 1 : -1;
+            }
+            if (yDirection == 0) {
+                yDirection = random.nextBoolean() ? 1 : -1;
+            }
+        } else {
+            // straight mov
+            if (random.nextBoolean()) {
+                xDirection = 0;
+            } else {
+                yDirection = 0;
+            }
         }
-
     }
 
 
