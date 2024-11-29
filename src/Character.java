@@ -30,29 +30,26 @@ public class Character {
     private void checkCollision(Level level) {
         boolean collision = false;
 
-        // Check X boundaries
         if (xPosition <= level.getX1Corner()) {
-            xPosition = level.getX1Corner(); // Adjust position to boundary
+            xPosition = level.getX1Corner(); 
             xDirection *= -1;
             collision = true;
-        } else if (xPosition >= level.getX2Corner() - 50) { // Assuming 50 is the character's width
-            xPosition = level.getX2Corner() - 50; // Adjust position to boundary
+        } else if (xPosition >= level.getX2Corner() - 50) { 
+            xPosition = level.getX2Corner() - 50; 
             xDirection *= -1;
             collision = true;
         }
 
-        // Check Y boundaries
         if (yPosition <= level.getY1Corner()) {
-            yPosition = level.getY1Corner(); // Adjust position to boundary
+            yPosition = level.getY1Corner(); 
             yDirection *= -1;
             collision = true;
-        } else if (yPosition >= level.getY2Corner() - 50) { // Assuming 50 is the character's height
-            yPosition = level.getY2Corner() - 50; // Adjust position to boundary
+        } else if (yPosition >= level.getY2Corner() - 50) { 
+            yPosition = level.getY2Corner() - 50;
             yDirection *= -1;
             collision = true;
         }
 
-        // Optional: Change to diagonal movement after collision
         if (collision) {
             adjustDirection();
         }
